@@ -1,0 +1,24 @@
+#reads the homer results from sense and antisense and converts to a table
+neg_pos=read.table(parclip_rre_negative_pos_motif.txt)
+neg_pos_table<-table(neg_pos)
+write.table(neg_pos_table, /Users/aishwaryakulkarni/Downloads/Negative_Pos_BiMatrix.txt, sep=\t)
+
+
+#create binary matrix for the binding
+negative_bi = read.table(Negative_Pos_BiMatrix.txt,header=T)
+temp <- table(negative_bi)
+temp[temp  1] <- 1
+negative_bi_matrix=data.matrix(negative_bi)
+negative_bi_matrix=t(negative_bi_matrix)
+cor_matrix=cor(negative_bi_matrix)
+library(xlsx)
+write.xlsx(cor_matrix,Cor_Matrix_negative.xlsx)
+
+
+
+MBNL1_exp<-read.table(MBNL1exp_scanning.txt)
+attach(MBNL1_exp)
+mytable	<-table(V1,V4)
+margin.table(mytable, 2)
+freq<-margin.table(mytable, 2)
+write.table(freq,freq_MBNL1_exp.txt)
